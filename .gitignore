@@ -1,0 +1,14 @@
+# Personal planning docs — keep local, never push
+MapleVitals_Milestone0.md
+Iti_GuidingMap_MapleVitals.md
+
+# Secrets & environment
+.env
+venv/
+
+# Python junk
+__pycache__/
+*.pyc
+
+# macOS junk
+.DS_Store
