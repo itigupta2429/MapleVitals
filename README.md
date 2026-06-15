@@ -22,10 +22,12 @@ grounded in the real source.
 
 ## Setup
 ```bash
-python -m venv venv
-source venv/bin/activate
-pip install pandas openai python-dotenv
+conda create -n maplevitals python=3.12 -y
+conda activate maplevitals
+pip install pandas anthropic python-dotenv
+pip install matplotlib
 ```
+
 Then create a `.env` file with your API key:
 ```
 OPENAI_API_KEY=sk-your-key-here

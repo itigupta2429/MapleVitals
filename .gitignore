@@ -1,6 +1,12 @@
 # Personal planning docs — keep local, never push
-MapleVitals_Milestone0.md
+MapleVitals_Milestone*.md
 Iti_GuidingMap_MapleVitals.md
+MapleVitals_LinkedIn_Tracker.xlsx
+
+
+#Charts and other outputs
+*.png
+
 
 # Secrets & environment
 .env
