@@ -1,5 +1,8 @@
-import streamlit as st
+import json
+import re
 from pathlib import Path
+
+import streamlit as st
 
 # -- page setup: title in the browser tab + page heading --
 st.set_page_config(page_title="MapleVitals", page_icon="🍁")
@@ -16,48 +19,29 @@ st.info(
 )
 
 
-# -- read interpretation.txt once and split it into {filename: text} --
-def load_interpretations(path="examples/interpretation.txt"):
-    raw = Path(path).read_text(encoding="utf-8")
-    blocks = {}
-    current_file = None
-    current_lines = []
-    for line in raw.splitlines():
-        stripped = line.strip()
-        if stripped.endswith(".png"):          # a filename line = start of a new block
-            if current_file:                    # save the previous block before starting new
-                blocks[current_file] = "\n".join(current_lines).strip()
-            current_file = stripped
-            current_lines = []
-        elif set(stripped) == {"="} or stripped == "":
-            continue                            # skip separator lines and blanks at edges
-        elif current_file:
-            current_lines.append(line)
-    if current_file:                            # save the last block
-        blocks[current_file] = "\n".join(current_lines).strip()
-    return blocks
+# -- load the structured agent output: {slug: {label, chart, interpretation}} --
+def load_interpretations(path="examples/interpretations.json"):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-interpretations = load_interpretations()
+# -- safety net: strip any leaked agent meta-narration before rendering --
+def clean(text):
+    # drop everything before the first markdown heading (kills "Perfect! Now let me...")
+    m = re.search(r"^#+ ", text, flags=re.M)
+    if m:
+        text = text[m.start():]
+    # drop stray horizontal-rule fences
+    text = text.replace("\n---\n", "\n")
+    return text.strip()
 
-# -- map a friendly question to its chart file --
-examples = {
-    "How does fair/poor mental health vary by age & gender in Alberta (18–34)?":
-        "mental_health_alberta_18_34.png",
-    "What does heavy drinking look like in Alberta (2024)?":
-        "heavy_drinking_alberta_2024.png",
-    "Are young Canadians smoking less (18–34)?":
-        "smoking_trend_18_34.png",
-    "How does self-reported obesity rank by province (2024)?":
-        "Self-reported_obesity__ranked_by_province__2024.png",
-    "Healthcare access vs. perceived health: young Alberta women":
-        "access_vs_health_alberta.png",
-}
 
-# -- dropdown so the visitor can pick which question's result to see --
-choice = st.selectbox("Pick a question the agent answered:", list(examples))
-chart_file = examples[choice]
+data = load_interpretations()
 
-# -- show the chart, then its interpretation (pulled from the txt file) --
-st.image(f"examples/{chart_file}", caption=f"Chart for: {choice}")
-st.markdown(interpretations.get(chart_file, "_Interpretation not found for this chart._"))
+# -- dropdown driven by the JSON labels (single source of truth) --
+labels = {entry["label"]: slug for slug, entry in data.items()}
+choice = st.selectbox("Pick a question the agent answered:", list(labels))
+entry = data[labels[choice]]
+
+# -- show the chart, then its cleaned interpretation --
+st.image(entry["chart"], caption=f"Chart for: {choice}")
+st.markdown(clean(entry["interpretation"]))

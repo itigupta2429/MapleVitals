@@ -1,0 +1,27 @@
+{
+  "mental_health_alberta_18_34": {
+    "label": "How does fair/poor mental health vary by age & gender in Alberta (18–34)?",
+    "chart": "examples/mental_health_alberta_18_34.png",
+    "interpretation": "## Single Clearest Pattern\n\n**Both males and females in Alberta's 18-to-34 age group reported substantially rising poor or fair mental health from 2015 to 2024, with females showing steeper and more volatile growth.** \n\nThe data shows:\n\n- **Males**: increased from 5.1% in 2015 to 16.8% in 2024 (+11.7 percentage points, or 229% growth), climbing steadily and peaking at 16.9% in 2021 before stabilizing.\n\n- **Females**: increased from 8.1% in 2015 to 26.3% in 2024 (+18.2 percentage points, or 225% growth), with sharper acceleration after 2019. Females peaked at 34.5% in 2023, then declined slightly to 26.3% in 2024.\n\n**The key insight**: Young Albertan females report about 1.6 times the rate of poor or fair mental health compared to males (26.3% vs. 16.8% in 2024), and this gender gap has widened over the period. Both sexes show accelerated deterioration starting in 2019–2021, coinciding with the COVID-19 pandemic and its aftermath (note the comparability breaks documented in the StatCan contract for 2020 and 2022).\n\n*Data quality note*: All figures carry no quality flag (STATUS is blank), so per Statistics Canada rules, these estimates are reported as normal. The 95% confidence intervals should be consulted to assess precision when precision is critical to your decision."
+  },
+  "heavy_drinking_alberta_2024": {
+    "label": "What does heavy drinking look like in Alberta (2024)?",
+    "chart": "examples/heavy_drinking_alberta_2024.png",
+    "interpretation": "## Which Albertans drink the heaviest? Heavy drinking by age and gender, 2024\n\nMen aged 35–49 report the heaviest drinking at 27.0%, followed closely by men aged 18–34 at 25.7%; across all age groups, males consistently drink more heavily than females, with the widest gap among 35–49-year-olds (27.0% vs 15.8%, an 11.2-point difference).\n\n**Data quality note:** All eight values carry no quality flag (STATUS is blank), indicating acceptable-to-excellent quality per Statistics Canada's standards."
+  },
+  "smoking_trend_18_34": {
+    "label": "Are young Canadians smoking less (18–34)?",
+    "chart": "examples/smoking_trend_18_34.png",
+    "interpretation": "## Young Canadians Are Smoking Significantly Less\n\nBoth male and female young adults (ages 18–34) in Canada have experienced substantial declines in current smoking over the 2015–2024 period: males dropped from 26.4% to 12.4% (a **14.0 percentage point decline**), while females fell from 17.8% to 7.1% (a **10.7 percentage point decline**), representing an average shift of approximately **12 percentage points across the period**.\n\n**Data quality note:** All estimates carry no quality flag in the STATUS column, indicating they meet baseline publication standards. No points were flagged as E (high variability) and no figures were suppressed, so all values can be reported as published."
+  },
+  "obesity_by_province_2024": {
+    "label": "How does self-reported obesity vary by province (2024)?",
+    "chart": "examples/Self-reported_obesity__ranked_by_province__2024.png",
+    "interpretation": "## Self-reported obesity in young adults by province, 2024\n\n**Young women:** Among non-flagged provinces, Saskatchewan leads self-reported obesity at 40.7%, followed closely by Nova Scotia at 40.3%, while British Columbia has the lowest rate at 21.0%—a gap of 19.7 percentage points. Newfoundland and Labrador's 29.8% rate carries an E-flag (high sampling variability) and is excluded from the ranking.\n\n**Young men:** Among non-flagged provinces, Nova Scotia leads at 30.3%, while Quebec has the lowest rate at 20.7%—a gap of 9.6 percentage points. Two provinces are E-flagged and excluded from the ranking: New Brunswick (43.6%) and Newfoundland and Labrador (33.0%) both have high sampling variability and should be used with caution. Prince Edward Island data are flagged as F (too unreliable to publish) and are not shown."
+  },
+  "access_vs_health_alberta": {
+    "label": "Healthcare access vs. perceived health: young Alberta women",
+    "chart": "examples/access_vs_health_alberta.png",
+    "interpretation": "## Regular Provider vs. Perceived Health: Young Alberta Women, 2015–2024\n\nThe two indicators **diverged substantially over the period**. From 2015 to 2024, having a regular healthcare provider declined modestly (−2.5 percentage points, from 79.5% to 77.0%), while perceived health as very good or excellent fell sharply (−12.8 percentage points, from 70.3% to 57.5%), causing the gap between them to widen from 9.2 to 19.5 percentage points.\n\n**Data quality note:** All values carry no status flag (blank STATUS column), indicating no quality concerns flagged by Statistics Canada. The data represents percentage values only; all rows with significance codes (−1/0/1) were excluded as instructed. The two indicators are independent and do not sum to any meaningful total—the gap between them reflects differences in what each measures, not missing categories in either metric."
+  }
+}
