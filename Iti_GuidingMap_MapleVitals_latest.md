@@ -32,7 +32,9 @@ Ask a Canadian health question in plain English → MapleVitals writes the analy
 
 ## How you'll work now (the pivot)
 
-**Deploy first, then stack features.** Each feature = a version bump = one LinkedIn post (~1–2/week).
+**Deploy first, then stack features.** Each feature = a version bump = one **build-log** LinkedIn post.
+
+But posting isn't gated on shipping. Build-log version posts are only **one of four content pillars** (build log · health insight · AI concept · opinion). The health, AI, and opinion posts fill the weeks between releases — that's how you sustain ~1–2 posts/week even when no new version is out. **The tracker is the source of truth for what to post next;** this doc just sets the build direction.
 
 You don't need to understand everything. For **each piece**, be able to explain three things:
 1. **What** does it do?
@@ -57,6 +59,8 @@ Each is one feature, one version, one post. Order can flex.
 | v0.4 | Memory + database (follow-up questions) | SQL, caching, agent memory |
 | v0.5 | Evaluator ("critic") agent | multi-agent, LLM-as-judge |
 | v1.0 | Hardened deploy + README | FastAPI/Docker, LLMOps |
+
+*Each version bump above = one build-log "version update" post. But that's only a fraction of your 50 — most posts come from the health-insight, AI-concept, and opinion pillars, which don't depend on shipping. See the tracker for the full mix.*
 
 **Trust the steps, not a calendar.** A slow start is fine — the words are new, not the work. You always have a *working, deployed* thing to show.
 
