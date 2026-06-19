@@ -26,8 +26,8 @@ THEME_TOKENS = {
     """,
     "light": """
       --ink:#F5F7FA; --surface:#FFFFFF; --surface-2:#EDF1F6;
-      --line:#D6DCE5; --text:#16202E; --muted:#5C6B7A; --soft:#3D4A5C;
-      --maple:#CD4126; --flag:#9A6B12;
+      --line:#D6DCE5; --text:#16202E; --muted:#48566A; --soft:#33415A;
+      --maple:#C13A20; --flag:#8A5E10;
       --imgshadow:0 8px 24px rgba(20,30,50,0.10);
     """,
 }
@@ -37,14 +37,45 @@ THEME_TOKENS = {
 # -----------------------------------------------------------------------------
 st.markdown(f"<style>:root{{{THEME_TOKENS[theme]}}}</style>", unsafe_allow_html=True)
 
+# Load the brand fonts via <link> (faster and more reliable on Community Cloud
+# than @import alone). Without these the wordmark silently falls back to a
+# system font on deploy, which is part of why it looked different there.
+st.markdown(
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
+    'family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&'
+    'family=IBM+Plex+Mono:wght@400;500&display=swap">',
+    unsafe_allow_html=True,
+)
+
 st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-    .stApp{ background:var(--ink); }
-    html, body, [class*="css"]{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:18px; }
-    h1,h2,h3{ font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em; }
+    /* Lock the root size with !important so rem units compute identically in
+       every Streamlit version (Community Cloud can run a different build than
+       your local conda env). This is also the single knob that scales every
+       rem-based size up together: raise this number to make everything bigger. */
+    html{ font-size:20px !important; }
+
+    /* Background + base text target STABLE selectors. Streamlit renames its
+       hashed class names (.css-* -> .st-emotion-cache-*) between versions, so the
+       old [class*="css"] selector silently stops matching after an upgrade,
+       which is exactly what made the deployed page render smaller and unstyled. */
+    .stApp,
+    [data-testid="stAppViewContainer"],
+    [data-testid="stMain"]{ background:var(--ink) !important; }
+    .stApp{ font-size:1rem; }
+    .stApp, .stApp p, .stApp li, .stApp span, .stApp label,
+    [data-testid="stMarkdownContainer"]{
+      font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+      color:var(--text);
+    }
+    h1,h2,h3,.mv-wordmark{
+      font-family:'Space Grotesk',system-ui,sans-serif; letter-spacing:-0.02em;
+    }
     .block-container,
     [data-testid="stMainBlockContainer"]{ max-width:1080px; margin:0 auto; padding:2.4rem 2.5rem 3rem; }
     /* prose sits in a centered column, so no extra width cap is needed */
@@ -140,8 +171,9 @@ st.markdown(
       margin-top:1.6rem; padding-top:1.2rem; border-top:1px solid var(--line);
       font-size:0.95rem; color:var(--muted); line-height:1.7;
     }
-    .mv-footer a{ color:var(--text); text-decoration:none; border-bottom:1px solid var(--line); }
-    .mv-footer a:hover{ border-color:var(--maple); }
+    .mv-footer a{ color:var(--maple); font-weight:600; text-decoration:none;
+                  border-bottom:1px solid var(--maple); }
+    .mv-footer a:hover{ opacity:0.78; }
     .mv-footer .mv-mono{ font-family:'IBM Plex Mono',monospace; color:var(--muted); }
 
     @keyframes mv-rise{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
