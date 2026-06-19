@@ -1,0 +1,7 @@
+[theme]
+base = "dark"
+primaryColor = "#E0533D"            # warm maple accent — replaces Streamlit's default coral red
+backgroundColor = "#0C0F14"         # deep slate, not pure black
+secondaryBackgroundColor = "#151A22"
+textColor = "#E8EDF3"
+font = "sans serif"

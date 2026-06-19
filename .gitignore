@@ -21,4 +21,8 @@ __pycache__/
 .DS_Store
 
 # Raw data
-data/
+data/health_canada.csv
+data/health_canada_MetaData.csv
+data/13100905-eng.zip
+data/statcan_contract.yaml
+data/agent_prompt_block.txt
