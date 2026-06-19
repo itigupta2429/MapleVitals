@@ -10,27 +10,47 @@ import streamlit.components.v1 as components
 st.set_page_config(page_title="MapleVitals", page_icon="🍁", layout="wide")
 
 # -----------------------------------------------------------------------------
+# Theme: the viewer chooses light or dark; dark stays the default.
+# -----------------------------------------------------------------------------
+_, _theme_col = st.columns([5, 1])
+with _theme_col:
+    _light = st.toggle("Light mode", value=False, key="mv_light")
+theme = "light" if _light else "dark"
+
+THEME_TOKENS = {
+    "dark": """
+      --ink:#0C0F14; --surface:#151A22; --surface-2:#1E2530;
+      --line:#283040; --text:#E8EDF3; --muted:#93A1B1; --soft:#C3CCD8;
+      --maple:#E0533D; --flag:#E6B450;
+      --imgshadow:0 8px 28px rgba(0,0,0,0.35);
+    """,
+    "light": """
+      --ink:#F5F7FA; --surface:#FFFFFF; --surface-2:#EDF1F6;
+      --line:#D6DCE5; --text:#16202E; --muted:#5C6B7A; --soft:#3D4A5C;
+      --maple:#CD4126; --flag:#9A6B12;
+      --imgshadow:0 8px 24px rgba(20,30,50,0.10);
+    """,
+}
+
+# -----------------------------------------------------------------------------
 # Styling: fonts, palette tokens, component polish, and the flag-legend signature
 # -----------------------------------------------------------------------------
+st.markdown(f"<style>:root{{{THEME_TOKENS[theme]}}}</style>", unsafe_allow_html=True)
+
 st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-    :root{
-      --ink:#0C0F14; --surface:#151A22; --surface-2:#1E2530;
-      --line:#283040; --text:#E8EDF3; --muted:#93A1B1;
-      --maple:#E0533D; --flag:#E6B450;
-    }
-
     .stApp{ background:var(--ink); }
-    html, body, [class*="css"]{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:17px; }
+    html, body, [class*="css"]{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:18px; }
     h1,h2,h3{ font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em; }
-    .block-container{ max-width:100%; margin:0; padding:2.2rem 3rem 2rem; }
-    /* body + interpretation prose larger; cap line length so it stays readable full-width */
-    .block-container p, .block-container li{ font-size:1.08rem; line-height:1.7; max-width:95ch; }
-    .block-container h2{ font-size:1.7rem; }
-    .block-container h3{ font-size:1.3rem; }
+    .block-container,
+    [data-testid="stMainBlockContainer"]{ max-width:1080px; margin:0 auto; padding:2.4rem 2.5rem 3rem; }
+    /* prose sits in a centered column, so no extra width cap is needed */
+    .block-container p, .block-container li{ font-size:1rem; line-height:1.7; }
+    .block-container h2{ font-size:1.55rem; }
+    .block-container h3{ font-size:1.25rem; }
 
     #MainMenu, footer, [data-testid="stToolbar"], [data-testid="stDecoration"]{ display:none; }
     header[data-testid="stHeader"]{ background:transparent; }
@@ -40,11 +60,12 @@ st.markdown(
       color:var(--muted); text-transform:uppercase; margin-bottom:0.5rem;
     }
     .mv-wordmark{
-      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:3.6rem;
+      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:3.2rem;
       line-height:1.04; letter-spacing:-0.03em; margin:0; animation:mv-rise 0.6s ease-out both;
     }
     .mv-thesis{
-      font-size:1.22rem; color:#C3CCD8; margin:0.8rem 0 1.2rem; max-width:62ch; line-height:1.6;
+      font-size:1.28rem; color:var(--soft); margin:0.85rem 0 1.3rem;
+      line-height:1.5; text-wrap:balance;
     }
     .mv-flags{ display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.4rem; }
     .mv-flag{
@@ -60,11 +81,28 @@ st.markdown(
       color:var(--maple); text-transform:uppercase; margin-bottom:0.8rem;
     }
 
-    [data-testid="stSelectbox"] label{ color:#C3CCD8; font-weight:600; font-size:1.05rem; }
+    [data-testid="stSelectbox"] label{ color:var(--soft); font-weight:600; font-size:1.05rem; }
+    [data-testid="stWidgetLabel"] p{ color:var(--soft) !important; }
+
+    /* Streamlit widget chrome is themed by Streamlit, not our CSS, so override it
+       here to follow the toggle. Closed selectbox control + the dropdown popover. */
+    [data-testid="stSelectbox"] div[data-baseweb="select"] > div{
+      background:var(--surface) !important; border-color:var(--line) !important;
+    }
+    [data-testid="stSelectbox"] div[data-baseweb="select"] *{ color:var(--text) !important; }
+    [data-testid="stSelectbox"] div[data-baseweb="select"] svg{ fill:var(--muted) !important; }
+    div[data-baseweb="popover"] [role="listbox"]{
+      background:var(--surface) !important; border:1px solid var(--line) !important;
+    }
+    div[data-baseweb="popover"] li[role="option"]{
+      background:var(--surface) !important; color:var(--text) !important;
+    }
+    div[data-baseweb="popover"] li[role="option"]:hover,
+    div[data-baseweb="popover"] li[aria-selected="true"]{ background:var(--surface-2) !important; }
 
     [data-testid="stImage"]{
       background:#ffffff; padding:14px; border-radius:12px;
-      border:1px solid var(--line); box-shadow:0 8px 28px rgba(0,0,0,0.35);
+      border:1px solid var(--line); box-shadow:var(--imgshadow);
     }
     [data-testid="stImage"] img{ width:100%; height:auto; border-radius:6px; }
 
@@ -86,8 +124,12 @@ st.markdown(
       font-family:'IBM Plex Mono',monospace; font-size:0.8rem; letter-spacing:0.12em;
       color:var(--maple); text-transform:uppercase; margin-bottom:0.45rem;
     }
-    .mv-step-t{ font-size:1.02rem; color:#C3CCD8; line-height:1.55; }
-    @media (max-width:640px){ .mv-how{ grid-template-columns:1fr; } }
+    .mv-step-t{ font-size:1.02rem; color:var(--soft); line-height:1.55; }
+    @media (max-width:640px){
+      .mv-how{ grid-template-columns:1fr; }
+      .block-container{ padding:1.6rem 1.2rem 2rem; }
+      .mv-wordmark{ font-size:2.4rem; }
+    }
 
     .mv-maplegend{
       font-family:'IBM Plex Mono',monospace; font-size:0.86rem; color:var(--muted);
@@ -100,7 +142,7 @@ st.markdown(
     }
     .mv-footer a{ color:var(--text); text-decoration:none; border-bottom:1px solid var(--line); }
     .mv-footer a:hover{ border-color:var(--maple); }
-    .mv-footer .mv-mono{ font-family:'IBM Plex Mono',monospace; color:#7C8896; }
+    .mv-footer .mv-mono{ font-family:'IBM Plex Mono',monospace; color:var(--muted); }
 
     @keyframes mv-rise{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
     @media (prefers-reduced-motion:reduce){ .mv-wordmark{ animation:none; } }
@@ -117,8 +159,8 @@ st.markdown(
     <div class="mv-eyebrow">Canadian public-health intelligence</div>
     <div class="mv-wordmark">🍁 MapleVitals</div>
     <div class="mv-thesis">
-      An agent that turns Statistics Canada health data into charts and plain-language
-      reads &mdash; with the data-quality checks an epidemiologist would insist on.
+      An agent that turns Statistics Canada health data into charts and plain&#8209;language
+      reads, with the data&#8209;quality checks an epidemiologist would insist on.
     </div>
     <div class="mv-flags">
       <span class="mv-flag"><b>E</b> high variability &middot; flagged with caution</span>
@@ -139,7 +181,12 @@ def clean(text):
     m = re.search(r"^#+ ", text, flags=re.M)
     if m:
         text = text[m.start():]
-    return text.replace("\n---\n", "\n").strip()
+    text = text.replace("\n---\n", "\n")
+    # Drop em dashes from displayed prose (en dashes are kept so ranges like 2015-2024 survive).
+    text = text.replace("&mdash;", "\u2014").replace("&#8212;", "\u2014")
+    text = re.sub(r"\s*\u2014\s*", ", ", text)
+    text = re.sub(r" +", " ", text)
+    return text.strip()
 
 
 data = load_interpretations()
@@ -154,7 +201,12 @@ PROVINCES = [
     "Quebec", "Ontario", "Manitoba", "Saskatchewan", "Alberta", "British Columbia",
 ]
 MAPLE_SCALE = [[0, "#6E2A22"], [0.4, "#B23E28"], [0.72, "#E0633A"], [1, "#F2853F"]]
-GREY_SCALE = [[0, "#262D38"], [1, "#262D38"]]
+MAP_COLORS = {
+    "dark":  {"bg": "#0C0F14", "border": "#0C0F14", "grey": "#262D38",
+              "grey_line": "#3A4252", "font": "#E8EDF3"},
+    "light": {"bg": "#F5F7FA", "border": "#FFFFFF", "grey": "#E2E8F0",
+              "grey_line": "#C4CCD8", "font": "#16202E"},
+}
 
 
 @st.cache_data
@@ -176,7 +228,9 @@ def province_records(df, indicator, sex, age, year):
             for _, r in sub.iterrows()}
 
 
-def build_province_map(recs, geo):
+def build_province_map(recs, geo, theme="dark"):
+    c = MAP_COLORS[theme]
+    grey_scale = [[0, c["grey"]], [1, c["grey"]]]
     all_names = {f["properties"]["name"] for f in geo["features"]}
     base = {p: v for p, (v, s) in recs.items() if s != "E" and pd.notna(v)}
     eflag = {p: v for p, (v, s) in recs.items() if s == "E" and pd.notna(v)}
@@ -192,7 +246,7 @@ def build_province_map(recs, geo):
         geojson=geo, featureidkey="properties.name",
         locations=list(base), z=list(base.values()),
         colorscale=MAPLE_SCALE, zmin=zmin, zmax=zmax,
-        marker_line_color="#0C0F14", marker_line_width=0.6,
+        marker_line_color=c["border"], marker_line_width=0.6,
         colorbar=dict(title=dict(text="%", font=dict(size=15)), tickfont=dict(size=14),
                       thickness=14, len=0.75, outlinewidth=0),
         hovertemplate="<b>%{location}</b><br>%{z}%<extra></extra>")]
@@ -207,8 +261,8 @@ def build_province_map(recs, geo):
         if names:
             traces.append(go.Choropleth(
                 geojson=geo, featureidkey="properties.name",
-                locations=names, z=[0] * len(names), colorscale=GREY_SCALE, showscale=False,
-                marker_line_color="#3A4252", marker_line_width=0.8,
+                locations=names, z=[0] * len(names), colorscale=grey_scale, showscale=False,
+                marker_line_color=c["grey_line"], marker_line_width=0.8,
                 hovertemplate="<b>%{location}</b><br>" + note + "<extra></extra>"))
 
     fig = go.Figure(traces)
@@ -221,7 +275,7 @@ def build_province_map(recs, geo):
         bgcolor="rgba(0,0,0,0)",
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0), paper_bgcolor="rgba(0,0,0,0)",
-                      font=dict(color="#E8EDF3", size=15), hoverlabel=dict(font_size=14),
+                      font=dict(color=c["font"], size=15), hoverlabel=dict(font_size=14),
                       height=580, dragmode=False)
     return fig
 
@@ -231,7 +285,7 @@ PLOTLY_CDN = "https://cdn.plot.ly/plotly-2.35.2.min.js"
 MAP_HTML = """
 <!DOCTYPE html><html><head><meta charset="utf-8">
 <script src="__CDN__"></script>
-<style>html,body{margin:0;padding:0;background:#0C0F14;}#map{width:100%;}</style>
+<style>html,body{margin:0;padding:0;background:__BG__;}#map{width:100%;}</style>
 </head><body>
 <div id="map"></div>
 <script>
@@ -260,8 +314,10 @@ gd.on('plotly_unhover', function(ev){
 """
 
 
-def render_map(fig):
-    html = MAP_HTML.replace("__CDN__", PLOTLY_CDN).replace("__FIG__", fig.to_json())
+def render_map(fig, theme="dark"):
+    html = (MAP_HTML.replace("__CDN__", PLOTLY_CDN)
+            .replace("__BG__", MAP_COLORS[theme]["bg"])
+            .replace("__FIG__", fig.to_json()))
     components.html(html, height=600, scrolling=False)
 
 # -----------------------------------------------------------------------------
@@ -309,13 +365,13 @@ with c3:
     year = st.selectbox("Year", years, index=len(years) - 1)
 
 recs = province_records(df, indicator, sex, age, year)
-fig = build_province_map(recs, geo)
+fig = build_province_map(recs, geo, theme)
 if fig is None:
     st.markdown(
-        '<div class="mv-maplegend">No province-level percentage for this combination — '
-        'try another age group, year, or gender.</div>', unsafe_allow_html=True)
+        '<div class="mv-maplegend">No province-level percentage for this combination. '
+        'Try another age group, year, or gender.</div>', unsafe_allow_html=True)
 else:
-    render_map(fig)
+    render_map(fig, theme)
     has_e = any(s == "E" for v, s in recs.values())
     has_f = any((s in ("F", "x")) or pd.isna(v) for v, s in recs.values())
     parts = ["Shade shows the rate (scale at right). Hover to highlight a province."]
@@ -325,7 +381,7 @@ else:
     st.markdown('<div class="mv-maplegend">' + " ".join(parts) + "</div>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# The agent — how it works (showing the build)
+# The agent - how it works (showing the build)
 # -----------------------------------------------------------------------------
 st.markdown('<hr class="mv-rule">', unsafe_allow_html=True)
 st.markdown('<div class="mv-section">The agent · how it works</div>', unsafe_allow_html=True)
@@ -335,7 +391,7 @@ st.markdown(
       <div class="mv-step">
         <div class="mv-step-k">Real data</div>
         <div class="mv-step-t">Queries the Canadian Community Health Survey
-        (StatCan table 13-10-0905-01) directly &mdash; no synthetic numbers.</div>
+        (StatCan table 13-10-0905-01) directly. No synthetic numbers.</div>
       </div>
       <div class="mv-step">
         <div class="mv-step-k">Quality guardrails</div>
@@ -358,7 +414,7 @@ st.markdown(
 st.markdown(
     """
     <div class="mv-footer">
-      Built by <b>Iti Gupta</b> &middot; <a href="REPLACE_WITH_YOUR_LINKEDIN_URL">LinkedIn</a><br>
+      Built by <b>Iti Gupta</b> &middot; <a href="https://www.linkedin.com/in/iti-gupta-ph-d-05278a56/">LinkedIn</a><br>
       Source: Statistics Canada, Canadian Community Health Survey,
       <span class="mv-mono">table 13-10-0905-01</span>. A portfolio showcase of real,
       quality-checked agent outputs; live querying runs privately.

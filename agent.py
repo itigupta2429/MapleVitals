@@ -72,39 +72,39 @@ def ask(question:str, max_turns: int=20) -> str:
         "question (e.g. plt.savefig('mental_health_alberta.png')). After the tool result,"
         "give a consice plain-English interpretation of what data shows."
         "Only use columns that actually exist.\n\n"
-        "=== DATA-QUALITY CONTRACT — apply before every final answer ===\n"
+        "=== DATA-QUALITY CONTRACT: apply before every final answer ===\n"
         f"{CONTRACT}\n"
         "=== HOW TO USE THE CONTRACT ===\n"
         "Before giving your final interpretation, check EVERY figure you report "
         "against the contract above:\n"
         "0. When you filter df to answer a question, ALWAYS include the STATUS "
-        "column in what you inspect — do not select only the VALUE. You cannot "
+        "column in what you inspect do not select only the VALUE. You cannot "
         "report a flag you never read.\n"
         "1. Read the STATUS column for each figure and apply the matching flag's "
         "action. For an E flag, state in plain language that the estimate has high "
-        "variability and should be used with caution — describing the confidence "
+        "variability and should be used with caution describing the confidence "
         "interval does NOT satisfy this.\n"
         "2. The -1/0/1 'Statistically different' rows are significance CODES, not "
-        "numbers — translate them to words, never report the raw number.\n"
+        "numbers translate them to words, never report the raw number.\n"
         "3. The two health indicators do NOT sum to 100%; never infer one by "
         "subtracting the other.\n"
         "4. GOLDEN RULE: if you hit any flag or symbol NOT in the contract, treat "
-        "it as a quality concern — surface it, don't assume it's safe.\n"
+        "it as a quality concern surface it, don't assume it's safe.\n"
         "5. For every figure, state which quality flag applies and what you did "
         "about it. If a figure is F or suppressed (x), do not present it as a "
         "usable number.\n\n"
-        "=== CORRECTNESS — as important as the quality contract above ===\n"
+        "=== CORRECTNESS as important as the quality contract above ===\n"
         "The contract catches FLAG errors. It does NOT catch WRONG NUMBERS. You "
-        "have no eyes — you CANNOT see the chart you saved — so:\n"
+        "have no eyes you CANNOT see the chart you saved so:\n"
         "A. Every figure, percentage, ranking, 'highest', or 'lowest' in your final "
         "answer MUST come from text you actually printed with run_python and read "
         "back. Never state a number you did not print.\n"
         "B. Before ANY 'highest/lowest' or ranking claim, first print the FULL "
         "sorted table (value + STATUS), then read the top/bottom row from that "
         "printed output. Do not eyeball, estimate, or recall from memory.\n"
-        "C. Describe only what the printed numbers say — never what the chart "
+        "C. Describe only what the printed numbers say never what the chart "
         "'shows' or 'looks like'. You cannot see it.\n\n"
-        "=== OUTPUT FORMAT — your answer is shown directly to end users in a web app ===\n"
+        "=== OUTPUT FORMAT your answer is shown directly to end users in a web app ===\n"
         "Output clean Markdown only. Do NOT include: filler like 'Perfect!' or "
         "'Now let me...'; ANY file path or .png filename; any mention of saving a "
         "figure. Start directly with the interpretation (a heading or a sentence).\n")
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     # slug -> {label shown in the Streamlit dropdown, chart path, prompt}
     QUESTIONS = {
         "mental_health_alberta_18_34": {
-            "label": "How does fair/poor mental health vary by age & gender in Alberta (18–34)?",
+            "label": "How does fair/poor mental health vary by age & gender in Alberta (18-34)?",
             "chart": "examples/mental_health_alberta_18_34.png",
             "prompt": '''In Alberta, how has the share reporting FAIR or POOR mental health changed from 2015 to 2024 for the 18-to-34 age group? Plot one line chart with two lines (males = blue circles, females = red squares) — no other age groups, no province faceting. Drop "Total, 18 and over". Use percentage values only (ignore -1/0/1 significance codes); draw E-flagged points as hollow markers on a dashed segment. Title it exactly: "Young Albertans reporting fair or poor mental health, 2015–2024 (by gender)". Then give me the single clearest pattern, based on the numbers you computed.''',
         },
