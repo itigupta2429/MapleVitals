@@ -26,9 +26,9 @@ st.markdown(
     .stApp{ background:var(--ink); }
     html, body, [class*="css"]{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:17px; }
     h1,h2,h3{ font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em; }
-    .block-container{ max-width:1400px; margin:0 auto; padding:2.2rem 2rem 2rem; }
-    /* body + interpretation prose larger for readability */
-    .block-container p, .block-container li{ font-size:1.08rem; line-height:1.7; }
+    .block-container{ max-width:100%; margin:0; padding:2.2rem 3rem 2rem; }
+    /* body + interpretation prose larger; cap line length so it stays readable full-width */
+    .block-container p, .block-container li{ font-size:1.08rem; line-height:1.7; max-width:95ch; }
     .block-container h2{ font-size:1.7rem; }
     .block-container h3{ font-size:1.3rem; }
 
@@ -66,7 +66,7 @@ st.markdown(
       background:#ffffff; padding:14px; border-radius:12px;
       border:1px solid var(--line); box-shadow:0 8px 28px rgba(0,0,0,0.35);
     }
-    [data-testid="stImage"] img{ border-radius:6px; }
+    [data-testid="stImage"] img{ width:100%; height:auto; border-radius:6px; }
 
     .mv-card-label{
       font-family:'IBM Plex Mono',monospace; font-size:0.82rem; letter-spacing:0.14em;
@@ -358,7 +358,7 @@ st.markdown(
 st.markdown(
     """
     <div class="mv-footer">
-      Built by <b>Iti Gupta</b> &middot; <a href="https://www.linkedin.com/in/iti-gupta-ph-d-05278a56/">LinkedIn</a><br>
+      Built by <b>Iti Gupta</b> &middot; <a href="REPLACE_WITH_YOUR_LINKEDIN_URL">LinkedIn</a><br>
       Source: Statistics Canada, Canadian Community Health Survey,
       <span class="mv-mono">table 13-10-0905-01</span>. A portfolio showcase of real,
       quality-checked agent outputs; live querying runs privately.
