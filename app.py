@@ -77,8 +77,7 @@ st.markdown(
       font-family:'Space Grotesk',system-ui,sans-serif; letter-spacing:-0.02em;
     }
     .block-container,
-    [data-testid="stMainBlockContainer"]{ max-width:1080px; margin:0 auto; padding:2.4rem 2.5rem 3rem; }
-    /* prose sits in a centered column, so no extra width cap is needed */
+    [data-testid="stMainBlockContainer"]{ max-width:96%; margin:0 auto; padding:2.4rem 2.5rem 3rem; }
     .block-container p, .block-container li{ font-size:1rem; line-height:1.7; }
     .block-container h2{ font-size:1.55rem; }
     .block-container h3{ font-size:1.25rem; }
