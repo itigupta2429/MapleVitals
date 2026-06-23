@@ -55,6 +55,10 @@ st.markdown(
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 
+    /* Set root font size so px-based values scale consistently on Streamlit Cloud,
+       which may apply a different html/body default than local dev. */
+    html, body{ font-size:18px !important; }
+
     /* Background + base text target STABLE selectors. Streamlit renames its
        hashed class names (.css-* -> .st-emotion-cache-*) between versions, so the
        old [class*="css"] selector silently stops matching after an upgrade,
