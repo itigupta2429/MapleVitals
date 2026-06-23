@@ -58,7 +58,8 @@ st.markdown(
        every Streamlit version (Community Cloud can run a different build than
        your local conda env). This is also the single knob that scales every
        rem-based size up together: raise this number to make everything bigger. */
-    html{ font-size:20px !important; }
+    :root, html{ font-size:20px !important; }
+    body{ font-size:20px !important; }
 
     /* Background + base text target STABLE selectors. Streamlit renames its
        hashed class names (.css-* -> .st-emotion-cache-*) between versions, so the
@@ -360,7 +361,7 @@ st.markdown('<div class="mv-section">Showcase &middot; real agent outputs</div>'
 choice = st.selectbox("Pick a question the agent answered", list(labels))
 entry = data[labels[choice]]
 
-st.image(entry["chart"])
+st.image(entry["chart"], use_container_width=True)
 
 st.markdown('<div class="mv-card-label">Agent interpretation</div>', unsafe_allow_html=True)
 with st.container(border=True):
