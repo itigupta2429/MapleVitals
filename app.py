@@ -54,12 +54,6 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-    /* Lock the root size with !important so rem units compute identically in
-       every Streamlit version (Community Cloud can run a different build than
-       your local conda env). This is also the single knob that scales every
-       rem-based size up together: raise this number to make everything bigger. */
-    :root, html{ font-size:20px !important; }
-    body{ font-size:20px !important; }
 
     /* Background + base text target STABLE selectors. Streamlit renames its
        hashed class names (.css-* -> .st-emotion-cache-*) between versions, so the
@@ -72,16 +66,19 @@ st.markdown(
     .stApp, .stApp p, .stApp li, .stApp span, .stApp label,
     [data-testid="stMarkdownContainer"],
     [data-testid="stMarkdownContainer"] p,
-    [data-testid="stMarkdownContainer"] li{
+    [data-testid="stMarkdownContainer"] li,
+    [data-testid="stMarkdownContainer"] strong,
+    [data-testid="stVerticalBlockBorderWrapper"] p,
+    [data-testid="stVerticalBlockBorderWrapper"] li{
       font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
       color:var(--text);
-      font-size:18px;
+      font-size:18px !important;
     }
     h1,h2,h3,.mv-wordmark{
       font-family:'Space Grotesk',system-ui,sans-serif; letter-spacing:-0.02em;
     }
     .block-container,
-    [data-testid="stMainBlockContainer"]{ max-width:96%; margin:0 auto; padding:2.4rem 2.5rem 3rem; }
+    [data-testid="stMainBlockContainer"]{ max-width:96%; margin:0 auto; padding:40px 50px 60px; }
     .block-container p, .block-container li{ font-size:18px !important; line-height:1.7; }
     .block-container h2{ font-size:28px !important; }
     .block-container h3{ font-size:22px !important; }
@@ -90,32 +87,32 @@ st.markdown(
     header[data-testid="stHeader"]{ background:transparent; }
 
     .mv-eyebrow{
-      font-family:'IBM Plex Mono',monospace; font-size:0.82rem; letter-spacing:0.18em;
-      color:var(--muted); text-transform:uppercase; margin-bottom:0.5rem;
+      font-family:'IBM Plex Mono',monospace; font-size:14px !important; letter-spacing:0.18em;
+      color:var(--muted); text-transform:uppercase; margin-bottom:8px;
     }
     .mv-wordmark{
-      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:3.2rem;
+      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:60px !important;
       line-height:1.04; letter-spacing:-0.03em; margin:0; animation:mv-rise 0.6s ease-out both;
     }
     .mv-thesis{
-      font-size:1.28rem; color:var(--soft); margin:0.85rem 0 1.3rem;
+      font-size:22px !important; color:var(--soft); margin:16px 0 24px;
       line-height:1.5; text-wrap:balance;
     }
-    .mv-flags{ display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.4rem; }
+    .mv-flags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
     .mv-flag{
-      font-family:'IBM Plex Mono',monospace; font-size:0.9rem; color:var(--muted);
+      font-family:'IBM Plex Mono',monospace; font-size:15px !important; color:var(--muted);
       background:var(--surface); border:1px solid var(--line); border-radius:7px;
-      padding:0.38rem 0.7rem;
+      padding:6px 12px;
     }
-    .mv-flag b{ color:var(--flag); margin-right:0.35rem; }
+    .mv-flag b{ color:var(--flag); margin-right:6px; }
 
-    .mv-rule{ height:1px; background:var(--line); border:0; margin:2rem 0 1.3rem; }
+    .mv-rule{ height:1px; background:var(--line); border:0; margin:32px 0 22px; }
     .mv-section{
-      font-family:'IBM Plex Mono',monospace; font-size:0.86rem; letter-spacing:0.18em;
-      color:var(--maple); text-transform:uppercase; margin-bottom:0.8rem;
+      font-family:'IBM Plex Mono',monospace; font-size:14px !important; letter-spacing:0.18em;
+      color:var(--maple); text-transform:uppercase; margin-bottom:14px;
     }
 
-    [data-testid="stSelectbox"] label{ color:var(--soft); font-weight:600; font-size:1.05rem; }
+    [data-testid="stSelectbox"] label{ color:var(--soft); font-weight:600; font-size:18px !important; }
     [data-testid="stWidgetLabel"] p{ color:var(--soft) !important; }
 
     /* Streamlit widget chrome is themed by Streamlit, not our CSS, so override it
@@ -155,24 +152,24 @@ st.markdown(
       border-radius:12px; padding:1rem 1rem 1.1rem;
     }
     .mv-step-k{
-      font-family:'IBM Plex Mono',monospace; font-size:0.8rem; letter-spacing:0.12em;
-      color:var(--maple); text-transform:uppercase; margin-bottom:0.45rem;
+      font-family:'IBM Plex Mono',monospace; font-size:13px !important; letter-spacing:0.12em;
+      color:var(--maple); text-transform:uppercase; margin-bottom:8px;
     }
-    .mv-step-t{ font-size:1.02rem; color:var(--soft); line-height:1.55; }
+    .mv-step-t{ font-size:17px !important; color:var(--soft); line-height:1.55; }
     @media (max-width:640px){
       .mv-how{ grid-template-columns:1fr; }
-      .block-container{ padding:1.6rem 1.2rem 2rem; }
-      .mv-wordmark{ font-size:2.4rem; }
+      .block-container{ padding:28px 20px 36px; }
+      .mv-wordmark{ font-size:42px !important; }
     }
 
     .mv-maplegend{
-      font-family:'IBM Plex Mono',monospace; font-size:0.86rem; color:var(--muted);
-      margin-top:0.4rem;
+      font-family:'IBM Plex Mono',monospace; font-size:14px !important; color:var(--muted);
+      margin-top:6px;
     }
 
     .mv-footer{
-      margin-top:1.6rem; padding-top:1.2rem; border-top:1px solid var(--line);
-      font-size:0.95rem; color:var(--muted); line-height:1.7;
+      margin-top:28px; padding-top:20px; border-top:1px solid var(--line);
+      font-size:16px !important; color:var(--muted); line-height:1.7;
     }
     .mv-footer a{ color:var(--maple); font-weight:600; text-decoration:none;
                   border-bottom:1px solid var(--maple); }
