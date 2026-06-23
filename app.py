@@ -68,20 +68,23 @@ st.markdown(
     .stApp,
     [data-testid="stAppViewContainer"],
     [data-testid="stMain"]{ background:var(--ink) !important; }
-    .stApp{ font-size:1rem; }
+    .stApp{ font-size:18px !important; }
     .stApp, .stApp p, .stApp li, .stApp span, .stApp label,
-    [data-testid="stMarkdownContainer"]{
+    [data-testid="stMarkdownContainer"],
+    [data-testid="stMarkdownContainer"] p,
+    [data-testid="stMarkdownContainer"] li{
       font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
       color:var(--text);
+      font-size:18px;
     }
     h1,h2,h3,.mv-wordmark{
       font-family:'Space Grotesk',system-ui,sans-serif; letter-spacing:-0.02em;
     }
     .block-container,
     [data-testid="stMainBlockContainer"]{ max-width:96%; margin:0 auto; padding:2.4rem 2.5rem 3rem; }
-    .block-container p, .block-container li{ font-size:1rem; line-height:1.7; }
-    .block-container h2{ font-size:1.55rem; }
-    .block-container h3{ font-size:1.25rem; }
+    .block-container p, .block-container li{ font-size:18px !important; line-height:1.7; }
+    .block-container h2{ font-size:28px !important; }
+    .block-container h3{ font-size:22px !important; }
 
     #MainMenu, footer, [data-testid="stToolbar"], [data-testid="stDecoration"]{ display:none; }
     header[data-testid="stHeader"]{ background:transparent; }
@@ -361,7 +364,9 @@ st.markdown('<div class="mv-section">Showcase &middot; real agent outputs</div>'
 choice = st.selectbox("Pick a question the agent answered", list(labels))
 entry = data[labels[choice]]
 
-st.image(entry["chart"], use_container_width=True)
+_, chart_col, _ = st.columns([0.5, 9, 0.5])
+with chart_col:
+    st.image(entry["chart"], use_container_width=True)
 
 st.markdown('<div class="mv-card-label">Agent interpretation</div>', unsafe_allow_html=True)
 with st.container(border=True):
