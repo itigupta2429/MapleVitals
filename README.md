@@ -20,13 +20,13 @@ grounded in the real source.
 
 ## Roadmap
 
-- [x] **M0** — Load a Canadian health CSV, get an LLM to describe it
-- [x] **M1** — Plain-English question → agent writes & runs analysis → chart + interpretation
-- [x] **M2** — Streamlit UI with dark/light theme, choropleth map, and data-quality flags
-- [ ] **M3** — RAG grounding with citations (ChromaDB)
-- [ ] **M4** — Agent fetches its own data live via the StatCan API (LangGraph)
-- [ ] **M5** — Persistence + multi-turn memory (SQL)
-- [ ] **M6** — Deploy (FastAPI + Docker, live link)
+![M0](https://img.shields.io/badge/M0-complete-brightgreen) Load StatCan CSV, LLM describes it in plain English  
+![M1](https://img.shields.io/badge/M1-complete-brightgreen) Question → agent analysis → chart + interpretation  
+![M2](https://img.shields.io/badge/M2-complete-brightgreen) Streamlit UI, choropleth map, dark/light theme, data-quality flags  
+![M3](https://img.shields.io/badge/M3-planned-lightgrey) RAG grounding with citations (ChromaDB)  
+![M4](https://img.shields.io/badge/M4-planned-lightgrey) Agent fetches live StatCan API data (LangGraph)  
+![M5](https://img.shields.io/badge/M5-planned-lightgrey) Multi-turn persistence and memory (SQL)  
+![M6](https://img.shields.io/badge/M6-planned-lightgrey) FastAPI + Docker, public deployment
 
 ## Setup
 
