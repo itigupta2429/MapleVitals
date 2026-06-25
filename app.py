@@ -7,7 +7,7 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.set_page_config(page_title="MapleVitals", page_icon="🍁", layout="wide")
+st.set_page_config(page_title="MapleVitals", page_icon="logo/maplevitals-icon-192.png", layout="wide")
 
 # -----------------------------------------------------------------------------
 # Theme: the viewer chooses light or dark; dark stays the default.
@@ -186,17 +186,26 @@ st.markdown(
 # -----------------------------------------------------------------------------
 # Header
 # -----------------------------------------------------------------------------
+_logo_file = "logo/maplevitals-lockup-light.svg" if theme == "light" else "logo/maplevitals-lockup-dark.svg"
+_logo_svg = Path(_logo_file).read_text(encoding="utf-8")
+# Crop the SVG viewBox to remove built-in whitespace and make it responsive
+_logo_svg = _logo_svg.replace(
+    'viewBox="0 0 505 360" width="505" height="360"',
+    'viewBox="55 18 400 328" style="width:100%;height:auto;display:block;"',
+)
+
 st.markdown(
-    """
-    <div class="mv-eyebrow">Canadian public-health intelligence</div>
-    <div class="mv-wordmark">🍁 MapleVitals</div>
-    <div class="mv-thesis">
-      An agent that turns Statistics Canada health data into charts and plain&#8209;language
-      reads, with the data&#8209;quality checks an epidemiologist would insist on.
-    </div>
-    <div class="mv-flags">
-      <span class="mv-flag"><b>E</b> high variability &middot; flagged with caution</span>
-      <span class="mv-flag"><b>F</b> suppressed &middot; withheld from results</span>
+    f"""
+    <div style="text-align:center; margin:8px auto 36px auto; max-width:720px;">
+      <div style="max-width:320px; margin:0 auto 20px auto;">{_logo_svg}</div>
+      <div class="mv-thesis" style="text-align:center; max-width:600px; margin:0 auto 18px auto; font-size:17px !important;">
+        An agent that turns Statistics Canada health data into charts and plain&#8209;language
+        reads, with the data&#8209;quality checks an epidemiologist would insist on.
+      </div>
+      <div class="mv-flags" style="justify-content:center;">
+        <span class="mv-flag"><b>E</b> high variability &middot; flagged with caution</span>
+        <span class="mv-flag"><b>F</b> suppressed &middot; withheld from results</span>
+      </div>
     </div>
     """,
     unsafe_allow_html=True,
