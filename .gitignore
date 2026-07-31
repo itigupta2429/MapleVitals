@@ -5,6 +5,8 @@ MapleVitals_LinkedIn_Tracker.xlsx
 Prompts_agentspy_Code*
 moat_catch_001_linkedinpost1.md
 *.pptx
+*.gif
+
 
 #Charts and other outputs
 *.png
@@ -28,3 +30,4 @@ data/health_canada_MetaData.csv
 data/13100905-eng.zip
 data/statcan_contract.yaml
 data/agent_prompt_block.txt
+logo/
