@@ -8,7 +8,7 @@ moat_catch_001_linkedinpost1.md
 #Charts and other outputs
 *.png
 !logo/*.png
-
+*.mp4
 
 # Secrets & environment
 .env
